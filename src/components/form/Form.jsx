@@ -5,7 +5,7 @@ import { useTelegram } from '../../hooks/useTelegram';
 const Form = () => {
     const [userName, setUserName] = useState('');
     const [userAge, setUserAge] = useState('');
-    const [userFoto, setUserFoto] = useState(null);
+    // const [userFoto, setUserFoto] = useState(null);
     const { tg } = useTelegram();
 
     const handleAddName = (e) => {
@@ -63,10 +63,10 @@ const Form = () => {
                 <label className={styles.label}>Возраст:</label>
                 <input type="number" id="age" value={userAge} onChange={handleAddAge} className={styles.input} required />
             </div>
-            <div className={styles.inputContainer}>
+            {/* <div className={styles.inputContainer}>
                 <label className={styles.label}>Добавить фото:</label>
                 <input type="file" id="photo" onChange={handleAddFoto} accept="image/*" className={styles.input} />
-            </div>
+            </div> */}
         </div>
     );
 };
