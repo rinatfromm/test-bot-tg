@@ -26,7 +26,7 @@ const Form = () => {
         const data = {
             userAge,
             userName,
-            
+
         };
         tg.sendData(JSON.stringify(data));
     }, []);
@@ -50,7 +50,7 @@ const Form = () => {
         } else {
             tg.MainButton.show();
         }
-    }, [tg, userAge, userName]);
+    }, [userAge, userName]);
 
     return (
         <div className={styles.form}>
