@@ -26,17 +26,17 @@ const Form = () => {
         const data = {
             userAge,
             userName,
-            userFoto
+            
         };
         tg.sendData(JSON.stringify(data));
-    }, [tg, userAge, userName, userFoto]);
+    }, []);
 
     useEffect(() => {
         tg.onEvent('mainButtonClicked', onSendData);
         return () => {
             tg.offEvent('mainButtonClicked', onSendData);
         };
-    }, [tg, onSendData]);
+    }, []);
 
     useEffect(() => {
         tg.MainButton.setParams({
