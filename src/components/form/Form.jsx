@@ -16,11 +16,11 @@ const Form = () => {
         setUserAge(e.target.value);
     };
 
-    const handleAddFoto = (e) => {
-        if (e.target.files.length > 0) {
-            setUserFoto(e.target.files[0]);
-        }
-    };
+    // const handleAddFoto = (e) => {
+    //     if (e.target.files.length > 0) {
+    //         setUserFoto(e.target.files[0]);
+    //     }
+    // };
 
     const onSendData = useCallback(() => {
         const data = {
