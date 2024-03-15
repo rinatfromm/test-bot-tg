@@ -5,7 +5,7 @@ import styles from './Header.module.css'
 
 
 const Header = () => {
-    const {  user, handleClose } = useTelegram
+    const {  user, handleClose } = useTelegram()
 
 
     return <div className={styles.header}>
