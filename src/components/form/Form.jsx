@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import styles from './Form.module.css';
 import { useTelegram } from '../../hooks/useTelegram';
 
@@ -26,12 +26,12 @@ const Form = () => {
         const data = {
             userAge,
             userName,
-            userFoto
+           
         }
         tg.sendData(JSON.stringify(data));
     }, [userAge,
         userName,
-        userFoto])
+        ])
 
     useEffect(() => {
         tg.onEvent('mainButtonClicked', onSendData)
