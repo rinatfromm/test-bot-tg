@@ -10,7 +10,7 @@ const Header = () => {
 
     return <div className={styles.header}>
         <Button  onClick={handleClose} />
-        <span className={'username'}>{user?.username}</span>
+        <span className={styles.username}>{user?.username}</span>
     </div>;
 }
 
