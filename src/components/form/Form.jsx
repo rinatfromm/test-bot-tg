@@ -26,25 +26,23 @@ const Form = () => {
         const data = {
             userAge,
             userName,
-           
-        }
+            userFoto
+        };
         tg.sendData(JSON.stringify(data));
-    }, [userAge,
-        userName,
-        ])
+    }, [tg, userAge, userName, userFoto]);
 
     useEffect(() => {
-        tg.onEvent('mainButtonClicked', onSendData)
+        tg.onEvent('mainButtonClicked', onSendData);
         return () => {
-            tg.offEvent('mainButtonClicked', onSendData)
-        }
-    }, [onSendData])
+            tg.offEvent('mainButtonClicked', onSendData);
+        };
+    }, [tg, onSendData]);
 
     useEffect(() => {
         tg.MainButton.setParams({
             text: 'Send'
         });
-    }, []);
+    }, [tg]);
 
     useEffect(() => {
         if (!userAge || !userName) {
@@ -52,7 +50,7 @@ const Form = () => {
         } else {
             tg.MainButton.show();
         }
-    }, [userAge, userName]);
+    }, [tg, userAge, userName]);
 
     return (
         <div className={styles.form}>
@@ -63,7 +61,7 @@ const Form = () => {
             </div>
             <div className={styles.inputContainer}>
                 <label className={styles.label}>Возраст:</label>
-                <input type="number" id="age" value={userAge} onChange={handleAddAge} className={styles.input} equired />
+                <input type="number" id="age" value={userAge} onChange={handleAddAge} className={styles.input} required />
             </div>
             <div className={styles.inputContainer}>
                 <label className={styles.label}>Добавить фото:</label>
