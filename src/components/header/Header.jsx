@@ -5,11 +5,11 @@ import styles from './Header.module.css'
 
 
 const Header = () => {
-    const {  user, handleClose } = useTelegram()
+    const { user, handleClose } = useTelegram()
 
 
     return <div className={styles.header}>
-        <Button close={Close} onClick={handleClose} />
+        <Button  onClick={handleClose} />
         <span className={'username'}>{user?.username}</span>
     </div>;
 }
