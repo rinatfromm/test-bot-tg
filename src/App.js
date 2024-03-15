@@ -1,12 +1,8 @@
 import { useEffect } from "react";
 import "./App.css";
-const tg = window.Telegram.WebApp;
+import Header from "./components/header/Header";
 
 function App() {
-  const handleClose = () => {
-    tg.close();
-  };
-
   useEffect(() => {
     tg.ready();
   }, []);
