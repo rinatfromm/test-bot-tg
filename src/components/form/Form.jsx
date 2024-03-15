@@ -22,6 +22,24 @@ const Form = () => {
         }
     };
 
+    const onSendData = useCallback(() => {
+        const data = {
+            userAge,
+            userName,
+            userFoto
+        }
+        tg.sendData(JSON.stringify(data));
+    }, [userAge,
+        userName,
+        userFoto])
+
+    useEffect(() => {
+        tg.onEvent('mainButtonClicked', onSendData)
+        return () => {
+            tg.offEvent('mainButtonClicked', onSendData)
+        }
+    }, [onSendData])
+
     useEffect(() => {
         tg.MainButton.setParams({
             text: 'Send'
@@ -41,11 +59,11 @@ const Form = () => {
             <h3>Введите ваши данные</h3>
             <div className={styles.inputContainer}>
                 <label className={styles.label}>Имя:</label>
-                <input type="text" id="name" value={userName} onChange={handleAddName} className={styles.input} />
+                <input type="text" id="name" value={userName} onChange={handleAddName} className={styles.input} required />
             </div>
             <div className={styles.inputContainer}>
                 <label className={styles.label}>Возраст:</label>
-                <input type="number" id="age" value={userAge} onChange={handleAddAge} className={styles.input} />
+                <input type="number" id="age" value={userAge} onChange={handleAddAge} className={styles.input} equired />
             </div>
             <div className={styles.inputContainer}>
                 <label className={styles.label}>Добавить фото:</label>
