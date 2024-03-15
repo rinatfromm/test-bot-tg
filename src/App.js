@@ -21,6 +21,7 @@ function App() {
       <Routes>
         <Route index element={<UserCard />} />
         <Route path={"/form"} element={<Form />} />
+        <div></div>
       </Routes>
     </div>
   );
