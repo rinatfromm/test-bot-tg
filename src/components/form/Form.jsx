@@ -16,14 +16,9 @@ const Form = () => {
         setUserAge(e.target.value);
     };
 
-    const handleAddFoto = async (e) => {
+    const handleAddFoto = (e) => {
         if (e.target.files.length > 0) {
-            const file = e.target.files[0];
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setUserFoto(reader.result);
-            };
-            reader.readAsDataURL(file);
+            setUserFoto(e.target.files[0]);
         }
     };
 
@@ -34,14 +29,14 @@ const Form = () => {
             userFoto
         };
         tg.sendData(JSON.stringify(data));
-    }, [userAge, userName, userFoto, tg]);
+    }, [userAge, userName, userFoto]);
 
     useEffect(() => {
         tg.onEvent('mainButtonClicked', onSendData);
         return () => {
             tg.offEvent('mainButtonClicked', onSendData);
         };
-    }, [onSendData, tg]);
+    }, [onSendData]);
 
     useEffect(() => {
         tg.MainButton.setParams({
@@ -55,7 +50,7 @@ const Form = () => {
         } else {
             tg.MainButton.show();
         }
-    }, [userAge, userName, tg]);
+    }, [userAge, userName]);
 
     return (
         <div className={styles.form}>
