@@ -16,9 +16,16 @@ const Form = () => {
         setUserAge(e.target.value);
     };
 
-    const handleAddFoto = (e) => {
-        if (e.target.files.length > 0) {
-            setUserFoto(e.target.files[0]);
+    const captureCameraPhoto = async () => {
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+            const track = stream.getVideoTracks()[0];
+            const imageCapture = new ImageCapture(track);
+            const photoBlob = await imageCapture.takePhoto();
+            setUserFoto(photoBlob);
+            track.stop();
+        } catch (error) {
+            console.error('Error capturing photo:', error);
         }
     };
 
@@ -65,7 +72,7 @@ const Form = () => {
             </div>
             <div className={styles.inputContainer}>
                 <label className={styles.label}>Добавить фото:</label>
-                <input type="file" id="photo" onChange={handleAddFoto} accept="image/*" capture="environment" className={styles.input} />
+                <button onClick={captureCameraPhoto} className={styles.cameraButton}>Сделать фото</button>
             </div>
         </div>
     );
