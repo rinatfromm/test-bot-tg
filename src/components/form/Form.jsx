@@ -5,7 +5,7 @@ import { useTelegram } from '../../hooks/useTelegram';
 const Form = () => {
     const [userName, setUserName] = useState('');
     const [userAge, setUserAge] = useState('');
-    // const [userFoto, setUserFoto] = useState(null);
+    const [userFoto, setUserFoto] = useState(null);
     const { tg } = useTelegram();
 
     const handleAddName = (e) => {
@@ -16,19 +16,20 @@ const Form = () => {
         setUserAge(e.target.value);
     };
 
-    // const handleAddFoto = (e) => {
-    //     if (e.target.files.length > 0) {
-    //         setUserFoto(e.target.files[0]);
-    //     }
-    // };
+    const handleAddFoto = (e) => {
+        if (e.target.files.length > 0) {
+            setUserFoto(e.target.files[0]);
+        }
+    };
 
     const onSendData = useCallback(() => {
         const data = {
             userAge,
             userName,
+            userFoto
         };
         tg.sendData(JSON.stringify(data));
-    }, [userAge, userName]);
+    }, [userAge, userName, userFoto]);
 
     useEffect(() => {
         tg.onEvent('mainButtonClicked', onSendData);
@@ -62,10 +63,10 @@ const Form = () => {
                 <label className={styles.label}>Возраст:</label>
                 <input type="number" id="age" value={userAge} onChange={handleAddAge} className={styles.input} required />
             </div>
-            {/* <div className={styles.inputContainer}>
+            <div className={styles.inputContainer}>
                 <label className={styles.label}>Добавить фото:</label>
                 <input type="file" id="photo" onChange={handleAddFoto} accept="image/*" className={styles.input} />
-            </div> */}
+            </div>
         </div>
     );
 };
