@@ -1,9 +1,12 @@
-button{
-    padding: 10px 15px;
+button {
+    padding: 50px 100px;
     background: var(--tg-theme-button-color);
     color: var(--tg-theme-button-text-color);
     border: none;
     outline: none;
     cursor: pointer;
     border-radius: 5px;
+    background-color: #007bff;
+    font-size: 50px;
+    margin-top: 150px;
 }
