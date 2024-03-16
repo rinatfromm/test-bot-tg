@@ -5,7 +5,7 @@ import { useTelegram } from '../../hooks/useTelegram';
 const Form = () => {
     const [userName, setUserName] = useState('');
     const [userAge, setUserAge] = useState('');
-    const [userFoto, setUserFoto] = useState(null);
+    // const [userFoto, setUserFoto] = useState(null);
     const { tg } = useTelegram();
 
     const handleAddName = (e) => {
@@ -16,34 +16,19 @@ const Form = () => {
         setUserAge(e.target.value);
     };
 
-    const captureCameraPhoto = async () => {
-        try {
-            const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-            videoRef.current.srcObject = stream;
-        } catch (error) {
-            console.error('Error capturing photo:', error);
-        }
-    };
-
-    const takeSnapshot = () => {
-        const canvas = document.createElement('canvas');
-        canvas.width = videoRef.current.videoWidth;
-        canvas.height = videoRef.current.videoHeight;
-        const ctx = canvas.getContext('2d');
-        ctx.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
-        canvas.toBlob((blob) => {
-            setUserFoto(blob);
-        }, 'image/jpeg');
-    };
+    // const handleAddFoto = (e) => {
+    //     if (e.target.files.length > 0) {
+    //         setUserFoto(e.target.files[0]);
+    //     }
+    // };
 
     const onSendData = useCallback(() => {
         const data = {
             userAge,
             userName,
-            userFoto
         };
         tg.sendData(JSON.stringify(data));
-    }, [userAge, userName, userFoto]);
+    }, [userAge, userName]);
 
     useEffect(() => {
         tg.onEvent('mainButtonClicked', onSendData);
@@ -77,11 +62,10 @@ const Form = () => {
                 <label className={styles.label}>Возраст:</label>
                 <input type="number" id="age" value={userAge} onChange={handleAddAge} className={styles.input} required />
             </div>
-            <div className={styles.inputContainer}>
-                <video ref={videoRef} className={styles.video} autoPlay></video>
-                <button onClick={captureCameraPhoto} className={styles.cameraButton}>Открыть камеру</button>
-                <button onClick={takeSnapshot} className={styles.cameraButton}>Сделать фото</button>
-            </div>
+            {/* <div className={styles.inputContainer}>
+                <label className={styles.label}>Добавить фото:</label>
+                <input type="file" id="photo" onChange={handleAddFoto} accept="image/*" capture="camera" className={styles.input} />
+            </div> */}
         </div>
     );
 };
