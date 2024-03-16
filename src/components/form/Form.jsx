@@ -5,6 +5,7 @@ import { useTelegram } from '../../hooks/useTelegram';
 const Form = () => {
     const [userName, setUserName] = useState('');
     const [userAge, setUserAge] = useState('');
+    // const [userFoto, setUserFoto] = useState(null);
     const { tg } = useTelegram();
 
     const handleAddName = (e) => {
@@ -15,20 +16,32 @@ const Form = () => {
         setUserAge(e.target.value);
     };
 
-    const sendFormData = () => {
+    // const handleAddFoto = (e) => {
+    //     if (e.target.files.length > 0) {
+    //         setUserFoto(e.target.files[0]);
+    //     }
+    // };
+
+    const onSendData = useCallback(() => {
         const data = {
             userAge,
-            userName
+            userName,
         };
         tg.sendData(JSON.stringify(data));
-    };
+    }, [userAge, userName]);
+
+    useEffect(() => {
+        tg.onEvent('mainButtonClicked', onSendData);
+        return () => {
+            tg.offEvent('mainButtonClicked', onSendData);
+        };
+    }, [onSendData]);
 
     useEffect(() => {
         tg.MainButton.setParams({
-            text: 'Send',
-            onClick: sendFormData
+            text: 'Send'
         });
-    }, [tg, userName, userAge]);
+    }, [tg]);
 
     useEffect(() => {
         if (!userAge || !userName) {
@@ -36,19 +49,23 @@ const Form = () => {
         } else {
             tg.MainButton.show();
         }
-    }, [tg, userName, userAge]);
+    }, [userAge, userName]);
 
     return (
         <div className={styles.form}>
             <h3>Введите ваши данные</h3>
             <div className={styles.inputContainer}>
                 <label className={styles.label}>Имя:</label>
-                <input type="text" value={userName} onChange={handleAddName} className={styles.input} required />
+                <input type="text" id="name" value={userName} onChange={handleAddName} className={styles.input} required />
             </div>
             <div className={styles.inputContainer}>
                 <label className={styles.label}>Возраст:</label>
-                <input type="number" value={userAge} onChange={handleAddAge} className={styles.input} required />
+                <input type="number" id="age" value={userAge} onChange={handleAddAge} className={styles.input} required />
             </div>
+            {/* <div className={styles.inputContainer}>
+                <label className={styles.label}>Добавить фото:</label>
+                <input type="file" id="photo" onChange={handleAddFoto} accept="image/*" capture="camera" className={styles.input} />
+            </div> */}
         </div>
     );
 };
