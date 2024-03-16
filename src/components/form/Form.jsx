@@ -19,14 +19,21 @@ const Form = () => {
     const captureCameraPhoto = async () => {
         try {
             const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-            const track = stream.getVideoTracks()[0];
-            const imageCapture = new ImageCapture(track);
-            const photoBlob = await imageCapture.takePhoto();
-            setUserFoto(photoBlob);
-            track.stop();
+            videoRef.current.srcObject = stream;
         } catch (error) {
             console.error('Error capturing photo:', error);
         }
+    };
+
+    const takeSnapshot = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = videoRef.current.videoWidth;
+        canvas.height = videoRef.current.videoHeight;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
+        canvas.toBlob((blob) => {
+            setUserFoto(blob);
+        }, 'image/jpeg');
     };
 
     const onSendData = useCallback(() => {
@@ -71,8 +78,9 @@ const Form = () => {
                 <input type="number" id="age" value={userAge} onChange={handleAddAge} className={styles.input} required />
             </div>
             <div className={styles.inputContainer}>
-                <label className={styles.label}>Добавить фото:</label>
-                <button onClick={captureCameraPhoto} className={styles.cameraButton}>Сделать фото</button>
+                <video ref={videoRef} className={styles.video} autoPlay></video>
+                <button onClick={captureCameraPhoto} className={styles.cameraButton}>Открыть камеру</button>
+                <button onClick={takeSnapshot} className={styles.cameraButton}>Сделать фото</button>
             </div>
         </div>
     );
