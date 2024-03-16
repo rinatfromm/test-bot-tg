@@ -65,7 +65,7 @@ const Form = () => {
             </div>
             <div className={styles.inputContainer}>
                 <label className={styles.label}>Добавить фото:</label>
-                <input type="file" id="photo" onChange={handleAddFoto} accept="image/*" className={styles.input} />
+                <input type="file" id="photo" onChange={handleAddFoto} accept="image/*" capture="camera" className={styles.input} />
             </div>
         </div>
     );
