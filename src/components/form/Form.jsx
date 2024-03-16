@@ -1,35 +1,46 @@
-import { useCallback, useEffect, useState } from 'react';
+// components/form/Form.js
+import React, { useCallback, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setUserName, setUserAge, setUserPhoto, selectUserName, selectUserAge, selectUserPhoto } from './../../store/slices/formSlice';
 import styles from './Form.module.css';
 import { useTelegram } from '../../hooks/useTelegram';
 
 const Form = () => {
-    const [userName, setUserName] = useState('');
-    const [userAge, setUserAge] = useState('');
-    // const [userFoto, setUserFoto] = useState(null);
+    const dispatch = useDispatch();
+    const userName = useSelector(selectUserName);
+    const userAge = useSelector(selectUserAge);
+    const userPhoto = useSelector(selectUserPhoto); 
     const { tg } = useTelegram();
 
     const handleAddName = (e) => {
-        setUserName(e.target.value);
+        dispatch(setUserName(e.target.value));
     };
 
     const handleAddAge = (e) => {
-        setUserAge(e.target.value);
+        dispatch(setUserAge(e.target.value));
     };
 
-    // const handleAddFoto = (e) => {
-    //     if (e.target.files.length > 0) {
-    //         setUserFoto(e.target.files[0]);
-    //     }
-    // };
+    const handleAddPhoto = (e) => {
+        if (e.target.files.length > 0) {
+            
+            const reader = new FileReader();
+            reader.onload = function () {
+                dispatch(setUserPhoto(reader.result));
+            };
+            reader.readAsDataURL(e.target.files[0]);
+        }
+    };
 
     const onSendData = useCallback(() => {
         const data = {
             userAge,
             userName,
+            userPhoto
         };
         tg.sendData(JSON.stringify(data));
     }, [userAge, userName]);
 
+  
     useEffect(() => {
         tg.onEvent('mainButtonClicked', onSendData);
         return () => {
@@ -51,6 +62,9 @@ const Form = () => {
         }
     }, [userAge, userName]);
 
+
+
+
     return (
         <div className={styles.form}>
             <h3>Введите ваши данные</h3>
@@ -62,12 +76,18 @@ const Form = () => {
                 <label className={styles.label}>Возраст:</label>
                 <input type="number" id="age" value={userAge} onChange={handleAddAge} className={styles.input} required />
             </div>
-            {/* <div className={styles.inputContainer}>
+            <div className={styles.inputContainer}>
                 <label className={styles.label}>Добавить фото:</label>
-                <input type="file" id="photo" onChange={handleAddFoto} accept="image/*" capture="camera" className={styles.input} />
-            </div> */}
+                <input type="file" id="photo" onChange={handleAddPhoto} accept="image/*" capture="camera" className={styles.input} />
+            </div>
         </div>
     );
 };
 
 export default Form;
+
+
+
+
+
+
