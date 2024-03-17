@@ -22,12 +22,11 @@ function App() {
   }, [tg, dispatch]);
 
   useEffect(() => {
-    // Здесь мы проверяем, получили ли мы фотографию от пользователя
-    // и сохраняем ее в Redux
     if (tg && tg.photoUrl) {
       dispatch(setUserPhoto(tg.photoUrl));
     }
   }, [tg, dispatch]);
+
   return (
     <div className="App">
       <Routes>

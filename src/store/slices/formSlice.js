@@ -29,6 +29,6 @@ export const { setUserName, setUserAge, setUserPhoto, resetForm } = formSlice.ac
 
 export const selectUserName = state => state.form.userName;
 export const selectUserAge = state => state.form.userAge;
-export const selectUserPhoto = state => state.form.userPhoto; // Селектор для фотографии
+export const selectUserPhoto = state => state.form.userPhoto;
 
 export default formSlice.reducer;
