@@ -76,10 +76,6 @@ const Form = () => {
                 <label className={styles.label}>Возраст:</label>
                 <input type="number" id="age" value={userAge} onChange={handleAddAge} className={styles.input} required />
             </div>
-            <div className={styles.inputContainer}>
-                <label className={styles.label}>Добавить фото:</label>
-                <input type="file" id="photo" onChange={handleAddPhoto} accept="image/*" capture="camera" className={styles.input} />
-            </div>
         </div>
     );
 };

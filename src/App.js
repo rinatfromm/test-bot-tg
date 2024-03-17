@@ -4,11 +4,12 @@ import { useTelegram } from "./hooks/useTelegram";
 import Form from "./components/form/Form";
 import { Route, Routes } from "react-router-dom";
 import UserCard from "./components/userCard/UserCard";
-import { useDispatch } from 'react-redux';
-import { resetForm } from './store/slices/formSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { resetForm, selectUserPhoto, setUserPhoto } from './store/slices/formSlice'; // Добавлен импорт setUserPhoto
 
 function App() {
   const dispatch = useDispatch();
+  const userPhoto = useSelector(selectUserPhoto);
   const { tg } = useTelegram();
 
   useEffect(() => {
@@ -20,6 +21,13 @@ function App() {
     };
   }, [tg, dispatch]);
 
+  useEffect(() => {
+    // Здесь мы проверяем, получили ли мы фотографию от пользователя
+    // и сохраняем ее в Redux
+    if (tg && tg.photoUrl) {
+      dispatch(setUserPhoto(tg.photoUrl));
+    }
+  }, [tg, dispatch]);
   return (
     <div className="App">
       <Routes>
