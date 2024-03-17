@@ -9,7 +9,7 @@ import { resetForm, selectUserPhoto, setUserPhoto } from './store/slices/formSli
 
 function App() {
   const dispatch = useDispatch();
-  const userPhoto = useSelector(selectUserPhoto);
+  // const userPhoto = useSelector(selectUserPhoto);
   const { tg } = useTelegram();
 
   useEffect(() => {
