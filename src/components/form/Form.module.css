@@ -6,10 +6,12 @@
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     background-color: #4a97db;
-    margin-top: 200px;
+    margin-top: 50px;
+    font-size: 20px;
 }
 
 h3 {
+    font-size: 20px;
     text-align: center;
     margin-bottom: 30px;
 }
